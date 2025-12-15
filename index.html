@@ -1,1 +1,130 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naxçıvan Kənd Təsərrüfatı Portal</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
+        #login-page { display: flex; justify-content: center; align-items: center; height: 100vh; background: #e0e0e0; }
+        #login-form { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.2); }
+        #main-page { display: none; }
+        header { background: #004d00; color: white; padding: 10px; text-align: center; }
+        nav { background: #006600; }
+        nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; }
+        nav ul li { margin: 0 15px; }
+        nav ul li a { color: white; text-decoration: none; padding: 10px 20px; display: block; }
+        nav ul li a:hover { background: #004d00; }
+        .content { display: flex; padding: 20px; }
+        .left { flex: 70%; }
+        .right { flex: 30%; background: white; padding: 20px; border-left: 2px solid #ccc; margin-left: 20px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+        .images-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .images-grid img { width: 100%; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.2); }
+        #map-container { text-align: center; margin-top: 40px; }
+        #map-container svg { max-width: 100%; height: auto; border: 1px solid #ccc; }
+        path { cursor: pointer; transition: fill 0.3s; }
+        path:hover { fill: #ff0000 !important; }
+        #district-info { min-height: 400px; }
+    </style>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+<body>
 
+    <!-- Login Page -->
+    <div id="login-page">
+        <div id="login-form">
+            <h2>İstifadəçi Girişi</h2>
+            <input type="text" id="username" placeholder="İstifadəçi adı" style="width:100%; padding:10px; margin:10px 0;"><br>
+            <input type="password" id="password" placeholder="Şifrə" style="width:100%; padding:10px; margin:10px 0;"><br>
+            <button onclick="login()" style="width:100%; padding:10px; background:#004d00; color:white; border:none;">Giriş et</button>
+            <p style="color:red; display:none;" id="error">Yanlış istifadəçi adı və ya şifrə!</p>
+        </div>
+    </div>
+
+    <!-- Main Page -->
+    <div id="main-page">
+        <header>
+            <h1>Naxçıvan Muxtar Respublikası Kənd Təsərrüfatı Portal</h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="#">Unikal kodla təhlükəsiz giriş</a></li>
+                <li><a href="#">Torpağın ətraflı aqrokimyəvi analizi</a></li>
+                <li><a href="#">İllər üzrə dəyişikliklərin izlənməsi</a></li>
+                <li><a href="#">Deqredasiyanın erkən aşkarlanması</a></li>
+                <li><a href="#">Gübrələmə və qulluq üzrə praktik tövsiyələr</a></li>
+                <li><a href="#">Qrafik və xəritə əsaslı vizual təqdimat</a></li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <div class="left">
+                <div class="images-grid">
+                    <img src="https://www.azernews.az/media/2017/08/08/150209219945214170_1000x669.jpg" alt="Üzüm bağları">
+                    <img src="https://media.gettyimages.com/id/153231682/photo/nakhchivan-azerbaijan-volunteers-plant-fruit-trees-in-the-mountains-of-eshabi-kehf-on.jpg?s=612x612&w=gi&k=20&c=fe5JHFt8Ht0qR_ATmcSv-pwcxM7-kxi9qJweLYDJ9Kk=" alt="Meyvə ağacları əkilməsi">
+                    <img src="https://www.canr.msu.edu/uploads/images/Plant%20Ag/SoilTesting_Fig1.jpg" alt="Torpaq analizi qrafiki">
+                    <img src="https://www.no-tillfarmer.com/ext/resources/images/2019/CTG-April/Soil-Ph-Chart.jpeg" alt="Torpaq pH cədvəli">
+                    <img src="https://media.news.climate.columbia.edu/wp-content/uploads/2016/07/crop-response-to-fertilizers.png" alt="Gübrə tövsiyələri">
+                    <img src="https://extension.psu.edu/media/wysiwyg//extensions/catalog_product/3c0d0e6d77c445b88e8fbc01cf9f3a5d/c/o/corn-yield-response_1.png" alt="Məhsuldarlıq qrafiki">
+                </div>
+
+                <div id="map-container">
+                    <h2>Naxçıvan Muxtar Respublikasının Xəritəsi</h2>
+                    <!-- Real Wikimedia SVG xəritəsi (rayonlar id ilə kliklənə bilər) -->
+                    <svg viewBox="0 0 1200 919" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Tam SVG məzmunu üçün: https://upload.wikimedia.org/wikipedia/commons/1/1f/Nakhchivan_Autonomous_Republic_of_Azerbaijan.svg -->
+                        <!-- Sadələşdirilmiş demo üçün placeholder path-lar (realda tam SVG yükləyin) -->
+                        <g>
+                            <path id="babek" d="M ... " fill="#aaddff" stroke="#000" onclick="showDistrict('Babək')"/>
+                            <path id="julfa" d="M ... " fill="#ddffaa" stroke="#000" onclick="showDistrict('Culfa')"/>
+                            <path id="kangarli" d="M ... " fill="#ffaaaa" stroke="#000" onclick="showDistrict('Kəngərli')"/>
+                            <path id="ordubad" d="M ... " fill="#aaffaa" stroke="#000" onclick="showDistrict('Ordubad')"/>
+                            <path id="sadarak" d="M ... " fill="#ffaadd" stroke="#000" onclick="showDistrict('Sədərək')"/>
+                            <path id="shahbuz" d="M ... " fill="#ddddff" stroke="#000" onclick="showDistrict('Şahbuz')"/>
+                            <path id="sharur" d="M ... " fill="#ffddaa" stroke="#000" onclick="showDistrict('Şərur')"/>
+                            <path id="nakhchivan-city" d="M ... " fill="#aaffdd" stroke="#000" onclick="showDistrict('Naxçıvan şəhəri')"/>
+                        </g>
+                        <image href="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nakhchivan_Autonomous_Republic_of_Azerbaijan.svg/1200px-Nakhchivan_Autonomous_Republic_of_Azerbaijan.svg.png" width="1200" height="919"/>
+                    </svg>
+                    <p><small>Xəritə mənbə: Wikimedia Commons</small></p>
+                </div>
+            </div>
+
+            <div class="right">
+                <h2>Rayon Məlumatları</h2>
+                <div id="district-info">
+                    <p>Bir rayon seçin.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function login() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            if (user === 'admin' && pass === '12345') {
+                document.getElementById('login-page').style.display = 'none';
+                document.getElementById('main-page').style.display = 'block';
+            } else {
+                document.getElementById('error').style.display = 'block';
+            }
+        }
+
+        function showDistrict(name) {
+            const info = document.getElementById('district-info');
+            info.innerHTML = `<h3>${name} Rayonu</h3>
+                <p>Torpaq analizi: Yüksək humus səviyyəsi.</p>
+                <p>Gübrə tövsiyəsi: Azot 150 kg/ha.</p>
+                <div id="chartContainer" style="height: 300px; width: 100%;"></div>`;
+
+            new CanvasJS.Chart("chartContainer", {
+                title: { text: "${name} - İllər üzrə məhsuldarlıq" },
+                data: [{ type: "column", dataPoints: [
+                    { label: "2021", y: 80 }, { label: "2022", y: 90 }, { label: "2023", y: 105 }, { label: "2024", y: 115 }, { label: "2025", y: 120 }
+                ]}]
+            }).render();
+        }
+    </script>
+</body>
+</html>
