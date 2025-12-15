@@ -124,8 +124,8 @@
                     <svg id="interactive-map" viewBox="0 0 1200 919" xmlns="http://www.w3.org/2000/svg">
                         <!-- Yenilənmiş koordinatlar: sahələr kiçildilib və istədiyiniz kimi yerləşdirilib -->
                         <path id="sadarak" d="M70,480 L140,480 L140,540 L70,540 Z" onclick="showDistrict('Sədərək')"/> <!-- Daha sola çəkilib -->
-                        <path id="sharur" d="M180,650 L300,650 L300,780 L180,780 Z" onclick="showDistrict('Şərur')"/> <!-- Yuxarıya çəkilib (Y azaldılıb) -->
-                        <path id="kangarli" d="M140,620 L220,620 L220,700 L140,700 Z" onclick="showDistrict('Kəngərli')"/>
+                        <path id="sharur" d="M180,650 L300,650 L300,780 L180,780 Z" onclick="showDistrict('Ordubad')"/> <!-- Yuxarıya çəkilib (Y azaldılıb) -->
+                        <path id="kangarli" d="M140,620 L220,620 L220,700 L140,700 Z" onclick="showDistrict('Culfa')"/>
                         <path id="babek" d="M220,520 L300,520 L300,600 L220,600 Z" onclick="showDistrict('Babək')"/>
                         <path id="nakhchivan-city" d="M250,570 L320,570 L320,640 L250,640 Z" onclick="showDistrict('Naxçıvan şəhəri')"/> <!-- Daha sola çəkilib -->
                         <path id="shahbuz" d="M180,480 L260,480 L260,570 L180,570 Z" onclick="showDistrict('Şahbuz')"/> <!-- Bir az aşağıya çəkilib (Y artırılıb) -->
@@ -170,7 +170,7 @@
             new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
                 theme: "light2",
-                title: { text: "${name} - İllər üzrə məhsuldarlıq artımı (ton/ha)" },
+                title: { text: "İllər üzrə məhsuldarlıq artımı (ton/ha)" },
                 axisX: { title: "İllər" },
                 axisY: { title: "Məhsuldarlıq (ton/ha)" },
                 data: [{
