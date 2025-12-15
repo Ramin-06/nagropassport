@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Naxçıvan Kənd Təsərrüfatı Portalı</title>
+    <!-- Font Awesome ikonları üçün (sadəcə bu sətir əlavə edildi) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
-        
-        /* Giriş səhifəsi üçün gözəl animasiyalı gradient fon */
+       
         #login-page {
             display: flex;
             justify-content: center;
@@ -17,13 +18,13 @@
             background-size: 400% 400%;
             animation: gradientAnimation 15s ease infinite;
         }
-        
+       
         @keyframes gradientAnimation {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        
+       
         #login-form {
             background: rgba(255, 255, 255, 0.95);
             padding: 40px;
@@ -33,22 +34,38 @@
             text-align: center;
             backdrop-filter: blur(10px);
         }
-        
+       
         #login-form h2 {
             color: #004d00;
             margin-bottom: 30px;
             font-size: 28px;
         }
-        
+       
+        /* Input sahələri üçün düzəliş (ikon yer tutsun) */
         #login-form input {
             width: 100%;
-            padding: 15px;
+            padding: 15px 15px 15px 50px;
             margin: 15px 0;
             border: 1px solid #ccc;
             border-radius: 8px;
             font-size: 16px;
+            box-sizing: border-box;
         }
-        
+       
+        .input-wrapper {
+            position: relative;
+            margin: 15px 0;
+        }
+       
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #004d00;
+            font-size: 18px;
+        }
+       
         #login-form button {
             width: 100%;
             padding: 15px;
@@ -60,16 +77,16 @@
             cursor: pointer;
             transition: background 0.3s;
         }
-        
+       
         #login-form button:hover {
             background: #006600;
         }
-        
+       
         #error {
             color: red;
             margin-top: 10px;
         }
-        
+       
         #main-page { display: none; }
         header { background: #004d00; color: white; padding: 15px; text-align: center; }
         nav { background: #006600; }
@@ -89,39 +106,32 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 <body>
-    <!-- Login Page -->
+    <!-- Yalnız giriş hissəsi dəyişdi, qalan hər şey eynidir -->
     <div id="login-page">
-        <!-- Sadəcə giriş səhifəsi hissəsini (login-page) dəyişdirilmiş şəkildə verirəm. 
-Qalan kodlar əvvəlki kimi qalacaq, yalnız bu div-i əvəz et. -->
-
-<div id="login-page">
-    <div id="login-form">
-        <h2>İstifadəçi Girişi</h2>
-        
-        <!-- İstifadəçi adı + insan ikonu -->
-        <div class="input-wrapper">
-            <i class="fas fa-user"></i>
-            <input type="text" id="username" placeholder="İstifadəçi adı">
+        <div id="login-form">
+            <h2>İstifadəçi Girişi</h2>
+            
+            <div class="input-wrapper">
+                <i class="fas fa-user"></i>
+                <input type="text" id="username" placeholder="İstifadəçi adı">
+            </div>
+            
+            <div class="input-wrapper">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" placeholder="Şifrə">
+            </div>
+            
+            <button onclick="login()">Giriş et</button>
+            <p style="display:none;" id="error">Yanlış istifadəçi adı və ya şifrə!</p>
         </div>
-        
-        <!-- Şifrə + qıfıl ikonu -->
-        <div class="input-wrapper">
-            <i class="fas fa-lock"></i>
-            <input type="password" id="password" placeholder="Şifrə">
-        </div>
-        
-        <button onclick="login()">Giriş et</button>
-        <p style="display:none;" id="error">Yanlış istifadəçi adı və ya şifrə!</p>
-    </div>
-</div>
     </div>
 
-    <!-- Main Page -->
+    <!-- Aşağıdakı hissə tamamilə dəyişməz qaldı -->
     <div id="main-page">
         <header>
             <h1>Naxçıvan Muxtar Respublikası Kənd Təsərrüfatı Portalı</h1>
         </header>
-       
+      
         <nav>
             <ul>
                 <li><a href="#">Torpağın ətraflı aqrokimyəvi analizi</a></li>
@@ -131,27 +141,23 @@ Qalan kodlar əvvəlki kimi qalacaq, yalnız bu div-i əvəz et. -->
                 <li><a href="#">Qrafik və xəritə əsaslı vizual təqdimat</a></li>
             </ul>
         </nav>
-
         <div class="content">
             <div class="left">
-                
                 <div id="map-container" style="max-width: 1000px; margin: 20px auto;">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nakhchivan_Autonomous_Republic_of_Azerbaijan.svg/1200px-Nakhchivan_Autonomous_Republic_of_Azerbaijan.svg.png" alt="Naxçıvan xəritəsi">
                     <svg id="interactive-map" viewBox="0 0 1200 919" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Yenilənmiş koordinatlar: sahələr kiçildilib və istədiyiniz kimi yerləşdirilib -->
-                        <path id="sadarak" d="M70,480 L140,480 L140,540 L70,540 Z" onclick="showDistrict('Sədərək')"/> <!-- Daha sola çəkilib -->
-                        <path id="sharur" d="M180,650 L300,650 L300,780 L180,780 Z" onclick="showDistrict('Ordubad')"/> <!-- Yuxarıya çəkilib (Y azaldılıb) -->
+                        <path id="sadarak" d="M70,480 L140,480 L140,540 L70,540 Z" onclick="showDistrict('Sədərək')"/>
+                        <path id="sharur" d="M180,650 L300,650 L300,780 L180,780 Z" onclick="showDistrict('Ordubad')"/>
                         <path id="kangarli" d="M140,620 L220,620 L220,700 L140,700 Z" onclick="showDistrict('Culfa')"/>
                         <path id="babek" d="M220,520 L300,520 L300,600 L220,600 Z" onclick="showDistrict('Babək')"/>
-                        <path id="nakhchivan-city" d="M250,570 L320,570 L320,640 L250,640 Z" onclick="showDistrict('Naxçıvan şəhəri')"/> <!-- Daha sola çəkilib -->
-                        <path id="shahbuz" d="M180,480 L260,480 L260,570 L180,570 Z" onclick="showDistrict('Şahbuz')"/> <!-- Bir az aşağıya çəkilib (Y artırılıb) -->
+                        <path id="nakhchivan-city" d="M250,570 L320,570 L320,640 L250,640 Z" onclick="showDistrict('Naxçıvan şəhəri')"/>
+                        <path id="shahbuz" d="M180,480 L260,480 L260,570 L180,570 Z" onclick="showDistrict('Şahbuz')"/>
                         <path id="julfa" d="M320,490 L400,490 L400,570 L320,570 Z" onclick="showDistrict('Culfa')"/>
                         <path id="ordubad" d="M380,580 L460,580 L460,710 L380,710 Z" onclick="showDistrict('Ordubad')"/>
                     </svg>
                 </div>
                 <p><small>Xəritə mənbə: KTN</small></p>
             </div>
-
             <div class="right">
                 <h2>Rayon Məlumatları</h2>
                 <div id="district-info">
@@ -160,7 +166,7 @@ Qalan kodlar əvvəlki kimi qalacaq, yalnız bu div-i əvəz et. -->
             </div>
         </div>
     </div>
-
+    
     <script>
         function login() {
             const user = document.getElementById('username').value;
@@ -172,7 +178,6 @@ Qalan kodlar əvvəlki kimi qalacaq, yalnız bu div-i əvəz et. -->
                 document.getElementById('error').style.display = 'block';
             }
         }
-
         function showDistrict(name) {
             const info = document.getElementById('district-info');
             info.innerHTML = `
@@ -180,9 +185,9 @@ Qalan kodlar əvvəlki kimi qalacaq, yalnız bu div-i əvəz et. -->
                 <p><strong>Torpaq analizi:</strong> Yüksək humus səviyyəsi, pH 7.2-7.8, münbit torpaqlar.</p>
                 <p><strong>Əsas məhsullar:</strong> Taxıl, meyvə-tərəvəz, üzüm bağları, heyvandarlıq.</p>
                 <p><strong>Gübrə tövsiyəsi:</strong> Azot 140-160 kg/ha, Fosfor 80-100 kg/ha, Kalium 60-80 kg/ha.</p>
-               
+              
                 <div id="chartContainer" style="height: 300px; width: 100%; margin: 20px 0;"></div>`;
-           
+          
             new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
                 theme: "light2",
