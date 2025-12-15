@@ -3,11 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naxçıvan Kənd Təsərrüfatı Portal</title>
+    <title>Naxçıvan Kənd Təsərrüfatı Portalı</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
-        #login-page { display: flex; justify-content: center; align-items: center; height: 100vh; background: #e0e0e0; }
-        #login-form { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.2); }
+        
+        /* Giriş səhifəsi üçün gözəl animasiyalı gradient fon */
+        #login-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(-45deg, #004d00, #006600, #008000, #00a000, #004d00);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+        }
+        
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        #login-form {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 350px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        #login-form h2 {
+            color: #004d00;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        
+        #login-form input {
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        #login-form button {
+            width: 100%;
+            padding: 15px;
+            background: #004d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        #login-form button:hover {
+            background: #006600;
+        }
+        
+        #error {
+            color: red;
+            margin-top: 10px;
+        }
+        
         #main-page { display: none; }
         header { background: #004d00; color: white; padding: 15px; text-align: center; }
         nav { background: #006600; }
@@ -21,8 +83,7 @@
         #map-container { position: relative; text-align: center; max-width: 100%; }
         #map-container img { max-width: 100%; height: auto; }
         #interactive-map { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
-        #interactive-map path { fill: transparent; cursor: pointer; transition: none; pointer-events: all; }
-        #interactive-map path:hover { fill: transparent; } /* Hover-da heç bir dəyişiklik yoxdur */
+        #interactive-map path { fill: transparent; cursor: pointer; pointer-events: all; }
         #district-info { min-height: 400px; }
     </style>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
@@ -32,19 +93,19 @@
     <div id="login-page">
         <div id="login-form">
             <h2>İstifadəçi Girişi</h2>
-            <input type="text" id="username" placeholder="İstifadəçi adı" style="width:100%; padding:10px; margin:10px 0;"><br>
-            <input type="password" id="password" placeholder="Şifrə" style="width:100%; padding:10px; margin:10px 0;"><br>
-            <button onclick="login()" style="width:100%; padding:10px; background:#004d00; color:white; border:none; border-radius:5px;">Giriş et</button>
-            <p style="color:red; display:none;" id="error">Yanlış istifadəçi adı və ya şifrə!</p>
+            <input type="text" id="username" placeholder="İstifadəçi adı">
+            <input type="password" id="password" placeholder="Şifrə">
+            <button onclick="login()">Giriş et</button>
+            <p style="display:none;" id="error">Yanlış istifadəçi adı və ya şifrə!</p>
         </div>
     </div>
 
     <!-- Main Page -->
     <div id="main-page">
         <header>
-            <h1>Naxçıvan Muxtar Respublikası Kənd Təsərrüfatı Portal</h1>
+            <h1>Naxçıvan Muxtar Respublikası Kənd Təsərrüfatı Portalı</h1>
         </header>
-        
+       
         <nav>
             <ul>
                 <li><a href="#">Torpağın ətraflı aqrokimyəvi analizi</a></li>
@@ -57,10 +118,11 @@
 
         <div class="content">
             <div class="left">
-                <h2>Naxçıvan Muxtar Respublikasının İnteraktiv Xəritəsi</h2>
+                <h2>Naxçıvan Muxtar Respublikasının Xəritəsi</h2>
                 <div id="map-container" style="max-width: 1000px; margin: 20px auto;">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nakhchivan_Autonomous_Republic_of_Azerbaijan.svg/1200px-Nakhchivan_Autonomous_Republic_of_Azerbaijan.svg.png" alt="Naxçıvan xəritəsi">
                     <svg id="interactive-map" viewBox="0 0 1200 919" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Rayon sahələri üçün sadələşdirilmiş koordinatlar (orijinal rəngli sahələrə uyğun təxmin edilərək) -->
                         <path id="babek" d="M400,300 L500,300 L500,400 L400,400 Z" onclick="showDistrict('Babək')"/>
                         <path id="julfa" d="M600,400 L700,400 L700,500 L600,500 Z" onclick="showDistrict('Culfa')"/>
                         <path id="kangarli" d="M300,500 L400,500 L400,600 L300,600 Z" onclick="showDistrict('Kəngərli')"/>
@@ -102,9 +164,9 @@
                 <p><strong>Torpaq analizi:</strong> Yüksək humus səviyyəsi, pH 7.2-7.8, münbit torpaqlar.</p>
                 <p><strong>Əsas məhsullar:</strong> Taxıl, meyvə-tərəvəz, üzüm bağları, heyvandarlıq.</p>
                 <p><strong>Gübrə tövsiyəsi:</strong> Azot 140-160 kg/ha, Fosfor 80-100 kg/ha, Kalium 60-80 kg/ha.</p>
-                
+               
                 <div id="chartContainer" style="height: 300px; width: 100%; margin: 20px 0;"></div>`;
-            
+           
             new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
                 theme: "light2",
