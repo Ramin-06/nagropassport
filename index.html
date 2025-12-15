@@ -91,13 +91,29 @@
 <body>
     <!-- Login Page -->
     <div id="login-page">
-        <div id="login-form">
-            <h2>İstifadəçi Girişi</h2>
+        <!-- Sadəcə giriş səhifəsi hissəsini (login-page) dəyişdirilmiş şəkildə verirəm. 
+Qalan kodlar əvvəlki kimi qalacaq, yalnız bu div-i əvəz et. -->
+
+<div id="login-page">
+    <div id="login-form">
+        <h2>İstifadəçi Girişi</h2>
+        
+        <!-- İstifadəçi adı + insan ikonu -->
+        <div class="input-wrapper">
+            <i class="fas fa-user"></i>
             <input type="text" id="username" placeholder="İstifadəçi adı">
-            <input type="password" id="password" placeholder="Şifrə">
-            <button onclick="login()">Giriş et</button>
-            <p style="display:none;" id="error">Yanlış istifadəçi adı və ya şifrə!</p>
         </div>
+        
+        <!-- Şifrə + qıfıl ikonu -->
+        <div class="input-wrapper">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="password" placeholder="Şifrə">
+        </div>
+        
+        <button onclick="login()">Giriş et</button>
+        <p style="display:none;" id="error">Yanlış istifadəçi adı və ya şifrə!</p>
+    </div>
+</div>
     </div>
 
     <!-- Main Page -->
