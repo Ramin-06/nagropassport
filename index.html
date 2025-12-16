@@ -162,14 +162,14 @@
             <h2>Admin girişi</h2>
             <div class="input-wrapper">
                 <i class="fas fa-user"></i>
-                <input type="text" id="username" placeholder="Fermerin adı">
+                <input type="text" id="username" placeholder="Unikal kod">
             </div>
             <div class="input-wrapper">
                 <i class="fas fa-lock"></i>
                 <input type="password" id="password" placeholder="Şifrə">
             </div>
             <button onclick="login()">DAXİL OL</button>
-            <p style="display:none;" id="error">Yanlış ad və ya şifrə!</p>
+            <p style="display:none;" id="error">Yanlış unikal kod və ya şifrə!</p>
         </div>
     </div>
 
@@ -217,7 +217,7 @@
         function login() {
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
-            if (user === 'Əli Vəliyev' && pass === '12345') {
+            if (user === '353692' && pass === '12345') {
                 document.getElementById('login-page').style.display = 'none';
                 document.getElementById('main-page').style.display = 'block';
             } else {
@@ -331,8 +331,6 @@
             new CanvasJS.Chart("risk-chart-container", {
                 animationEnabled: true,
                 theme: "light2",
-                title: { text: "Aqrokimyəvi analiz nəticələri"},
-                <h3>Humus 1.8 – Zəif – 1-2</h3>`;
                 title: { text: "Torpaq Deqredasiya Risk Səviyyələri" },
                 axisY: { title: "Risk Faizi (%)", maximum: 100 },
                 data: [{
