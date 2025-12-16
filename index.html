@@ -3,28 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naxçıvan Kənd Təsərrüfatı Portalı</title>
-    <!-- Font Awesome ikonları üçün (sadəcə bu sətir əlavə edildi) -->
+    <title>Naxçıvan Kənd Təsərrüfatı Laboratoriyaları Mərkəzi</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
-       
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f0f7f0; }
+      
         #login-page {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(-45deg, #004d00, #006600, #008000, #00a000, #004d00);
+            background: linear-gradient(-45deg, #1e40af, #3b82f6, #60a5fa, #93c5fd, #1e40af);
             background-size: 400% 400%;
             animation: gradientAnimation 15s ease infinite;
         }
-       
+      
         @keyframes gradientAnimation {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-       
+      
         #login-form {
             background: rgba(255, 255, 255, 0.95);
             padding: 40px;
@@ -34,14 +33,27 @@
             text-align: center;
             backdrop-filter: blur(10px);
         }
-       
+      
         #login-form h2 {
-            color: #004d00;
+            color: #1e40af;
             margin-bottom: 30px;
             font-size: 28px;
         }
-       
-        /* Input sahələri üçün düzəliş (ikon yer tutsun) */
+      
+        .input-wrapper {
+            position: relative;
+            margin: 15px 0;
+        }
+      
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #1e40af;
+            font-size: 18px;
+        }
+      
         #login-form input {
             width: 100%;
             padding: 15px 15px 15px 50px;
@@ -51,25 +63,11 @@
             font-size: 16px;
             box-sizing: border-box;
         }
-       
-        .input-wrapper {
-            position: relative;
-            margin: 15px 0;
-        }
-       
-        .input-wrapper i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #004d00;
-            font-size: 18px;
-        }
-       
+      
         #login-form button {
             width: 100%;
             padding: 15px;
-            background: #004d00;
+            background: #1e40af;
             color: white;
             border: none;
             border-radius: 8px;
@@ -77,68 +75,116 @@
             cursor: pointer;
             transition: background 0.3s;
         }
-       
+      
         #login-form button:hover {
-            background: #006600;
+            background: #2563eb;
         }
-       
+      
         #error {
             color: red;
             margin-top: 10px;
         }
-       
+      
         #main-page { display: none; }
-        header { background: #004d00; color: white; padding: 15px; text-align: center; }
-        nav { background: #006600; }
-        nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; flex-wrap: wrap; }
-        nav ul li { margin: 10px; }
-        nav ul li a { color: white; text-decoration: none; padding: 10px 20px; display: block; border-radius: 5px; }
-        nav ul li a:hover { background: #004d00; }
-        .content { display: flex; padding: 20px; height: calc(100vh - 140px); }
+        header { background: #1e40af; color: white; padding: 15px; text-align: center; }
+        nav { background: #3b82f6; padding: 10px 0; }
+        nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; }
+        nav ul li a { color: white; text-decoration: none; padding: 12px 30px; display: block; border-radius: 5px; font-size: 18px; transition: background 0.3s; }
+        nav ul li a:hover { background: #1e40af; }
+        .content { display: flex; padding: 20px; height: calc(100vh - 140px); background: #f0f7f0; }
         .left { flex: 70%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .right { flex: 30%; background: white; padding: 20px; border-left: 2px solid #ccc; margin-left: 20px; box-shadow: 0 0 5px rgba(0,0,0,0.1); border: 1px solid #ccc; border-radius: 8px; overflow-y: auto; }
+        .right { flex: 30%; background: white; padding: 20px; border-left: 2px solid #ccc; margin-left: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); border: 1px solid #ccc; border-radius: 12px; overflow-y: auto; }
         #map-container { position: relative; text-align: center; max-width: 100%; }
-        #map-container img { max-width: 100%; height: auto; }
+        #map-container img { max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         #interactive-map { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
         #interactive-map path { fill: transparent; cursor: pointer; pointer-events: all; }
-        #district-info { min-height: 400px; }
+        /* Hover-da heç bir rəng dəyişikliyi olmasın */
+        #interactive-map path:hover { fill: transparent; }
+
+        /* Accordion stil */
+        .village-item {
+            margin-bottom: 12px;
+            border: 1px solid #bbd9ff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .village-header {
+            background: #3b82f6;
+            color: white;
+            padding: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+        }
+        .village-header i {
+            margin-right: 12px;
+            transition: transform 0.3s;
+            font-size: 16px;
+        }
+        .village-header.active i {
+            transform: rotate(90deg);
+        }
+        .village-body {
+            padding: 18px;
+            background: #f8fbff;
+            display: none;
+        }
+        .resident-item {
+            padding: 10px;
+            margin: 8px 0;
+            background: white;
+            border: 1px solid #bbd9ff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .resident-item:hover {
+            background: #e0f2fe;
+        }
+        .resident-item.selected {
+            background: #2563eb;
+            color: white;
+        }
+        #risk-chart-container {
+            height: 350px;
+            width: 100%;
+            margin-top: 20px;
+            display: none;
+        }
     </style>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 <body>
-    <!-- Yalnız giriş hissəsi dəyişdi, qalan hər şey eynidir -->
     <div id="login-page">
         <div id="login-form">
-            <h2>İstifadəçi girişi</h2>
-            
+            <h2>Admin girişi</h2>
             <div class="input-wrapper">
                 <i class="fas fa-user"></i>
                 <input type="text" id="username" placeholder="Unikal kod">
             </div>
-            
             <div class="input-wrapper">
                 <i class="fas fa-lock"></i>
                 <input type="password" id="password" placeholder="Şifrə">
             </div>
-            
             <button onclick="login()">DAXİL OL</button>
             <p style="display:none;" id="error">Yanlış unikal kod və ya şifrə!</p>
         </div>
     </div>
 
-    <!-- Aşağıdakı hissə tamamilə dəyişməz qaldı -->
     <div id="main-page">
         <header>
-            <h1>Naxçıvan Torpaqlarının Rəqəmsal Pasportlaşdırılması və Xəritə Əsaslı İdarəetmə Sistemi</h1>
+            <h1>Naxçıvan Kənd Təsərrüfatı Laboratoriyaları Mərkəzi</h1>
         </header>
-      
+     
         <nav>
             <ul>
-                <li><a href="#">Torpağın ətraflı aqrokimyəvi analizi</a></li>
-                <li><a href="#">İllər üzrə dəyişikliklərin izlənməsi</a></li>
-                <li><a href="#">Deqredasiyanın erkən aşkarlanması</a></li>
-                <li><a href="#">Gübrələmə və qulluq üzrə praktik tövsiyələr</a></li>
-                <li><a href="#">Qrafik və xəritə əsaslı vizual təqdimat</a></li>
+                <li><a href="#">Ana Səhifə</a></li>
+                <li><a href="#">Rayon</a></li>
+                <li><a href="#">Aqrokimyəvi analizlər</a></li>
+                <li><a href="#">Nəticələr</a></li>
+                <li><a href="#">Risklər</a></li>
             </ul>
         </nav>
         <div class="content">
@@ -166,7 +212,7 @@
             </div>
         </div>
     </div>
-    
+   
     <script>
         function login() {
             const user = document.getElementById('username').value;
@@ -178,30 +224,123 @@
                 document.getElementById('error').style.display = 'block';
             }
         }
+
+        let selectedResident = null;
+
+        const districtsData = {
+            'Culfa': [
+                { name: "Givraq", residents: ["Paşayev Kamaleddin", "Əzizov Taleh", "Məhərrəmov Vüqar", "Qurbanov Seymur"] }
+            ],
+            'Ordubad': [
+                { name: "Qıvraq", residents: ["Əhmədov Elşən", "Məmmədov Tofiq", "Hüseynov Ramil", "İsgəndərov Kamran"] },
+                { name: "Şərur şəhər", residents: ["Quliyev Natiq", "Əliyev Sahib", "Cəfərov Orxan", "Sadıqov Fərid"] },
+                { name: "Arbatan", residents: ["Novruzov Anar", "Paşayev Vüqar", "Əzizov Taleh", "Babayev İlqar"] }
+            ],
+            'Şahbuz': [
+                { name: "Şahbuz şəhər", residents: ["Əliyev Vəli", "Həsənov Rəşid", "Məmmədov İlqar", "Quliyev Natiq"] },
+                { name: "Bişkənd", residents: ["İsmayılov Kamran", "Cəfərov Elçin", "Babayev Tofiq", "Əhmədov Sahib"] }
+               
+            ],
+            'Ordubad': [
+                { name: "Ordubad şəhər", residents: ["Məcidov Ramil", "Əsgərov Elvin", "Hüseynov Nicat", "İbrahimov Samir"] },
+                { name: "Nüsnüs", residents: ["Novruzov Anar", "Ələkbərov Fuad", "Səfərov Rövşən", "Mirqasımov Elşad"] }
+            ],
+            'Şahbuz': [
+                 { name: "Keçili", residents: ["Əsgərov Elvin", "Həsənov Rəşid", "Məmmədov İlqar", "Quliyev Natiq"] },
+                { name: "Aşağı qışlaq", residents: ["İsmayılov Kamran", "Cəfərov Elçin", "Babayev Tofiq", "Əhmədov Sahib"] }
+            ],
+            'Sədərək': [
+                { name: "Sədərək", residents: ["Məcidov Ramil", "Əsgərov Elvin", "Hüseynov Nicat", "İbrahimov Samir"] }
+            ],
+            'Culfa': [
+                { name: "Bənəniyar", residents: ["Əliyev Vəli", "Həsənov Rəşid", "Məmmədov İlqar", "Quliyev Natiq"] },
+                { name: "Saltaq", residents: ["İsmayılov Kamran", "Cəfərov Elçin", "Babayev Tofiq", "Əhmədov Sahib"] },
+                { name: "Göydərə", residents: ["Sadıqov Fərid", "Nəsirov Orxan", "Qasımov Emin", "Rəhimov Tural"] },
+                { name: "Əlincə", residents: ["Məcidov Ramil", "Əsgərov Elvin", "Hüseynov Nicat", "İbrahimov Samir"] },
+                { name: "Yaycı", residents: ["Novruzov Anar", "Ələkbərov Fuad", "Səfərov Rövşən", "Mirqasımov Elşad"] },
+                { name: "Ərəzin", residents: ["Paşayev Kamaleddin", "Əzizov Taleh", "Məhərrəmov Vüqar", "Qurbanov Seymur"] }
+               
+            ],
+            'Naxçıvan şəhəri': [
+                { name: "Naxçıvan şəhər", residents: ["Quliyev Natiq", "Əliyev Sahib", "Cəfərov Orxan", "Sadıqov Fərid"] }
+            ]
+        };
+
         function showDistrict(name) {
             const info = document.getElementById('district-info');
-            info.innerHTML = `
-                <h3>${name} Rayonu</h3>
-                <p><strong>Torpaq analizi:</strong> Yüksək humus səviyyəsi, pH 7.2-7.8, münbit torpaqlar.</p>
-                <p><strong>Əsas məhsullar:</strong> Taxıl, meyvə-tərəvəz, üzüm bağları, heyvandarlıq.</p>
-                <p><strong>Gübrə tövsiyəsi:</strong> Azot 90-120 kg/ha, Fosfor 80-100 kg/ha, Kalium 60-80 kg/ha.</p>
-              
-                <div id="chartContainer" style="height: 300px; width: 100%; margin: 20px 0;"></div>`;
-          
-            new CanvasJS.Chart("chartContainer", {
+            const villages = districtsData[name] || [];
+
+            let villagesHTML = `<h3>${name} Rayonu - Kəndlər/Qəsəbələr</h3>`;
+            
+            if (villages.length > 0) {
+                villages.forEach(village => {
+                    villagesHTML += `
+                        <div class="village-item">
+                            <div class="village-header" onclick="toggleVillage(this)">
+                                <i class="fas fa-chevron-right"></i>
+                                <span>${village.name}</span>
+                            </div>
+                            <div class="village-body">
+                                <p><strong>Qeydiyyatda olan vətəndaşlar (seçin):</strong></p>
+                                ${village.residents.map((res, index) => 
+                                    `<div class="resident-item" onclick="selectResident(this, '${res}')">${res}</div>`
+                                ).join('')}
+                            </div>
+                        </div>`;
+                });
+            } else {
+                villagesHTML += '<p>Bu rayon üçün məlumat yoxdur.</p>';
+            }
+
+            villagesHTML += `<div id="risk-chart-container"></div>`;
+            info.innerHTML = villagesHTML;
+            selectedResident = null;
+            document.getElementById('risk-chart-container').style.display = 'none';
+        }
+
+        function toggleVillage(header) {
+            const body = header.nextElementSibling;
+            const icon = header.querySelector('i');
+            if (body.style.display === "block") {
+                body.style.display = "none";
+                icon.classList.remove("fa-chevron-down");
+                icon.classList.add("fa-chevron-right");
+                header.classList.remove("active");
+            } else {
+                body.style.display = "block";
+                icon.classList.remove("fa-chevron-right");
+                icon.classList.add("fa-chevron-down");
+                header.classList.add("active");
+            }
+        }
+
+        function selectResident(element, name) {
+            // Əvvəlki seçimi sil
+            if (selectedResident) {
+                selectedResident.classList.remove("selected");
+            }
+            // Yeni seçimi işarələ
+            element.classList.add("selected");
+            selectedResident = element;
+
+            // Risk qrafikini göstər
+            const chartContainer = document.getElementById('risk-chart-container');
+            chartContainer.style.display = 'block';
+            chartContainer.innerHTML = '<h4 style="text-align:center;">' + name + ' - Torpaq Risk Qrafiki</h4>';
+
+            new CanvasJS.Chart("risk-chart-container", {
                 animationEnabled: true,
                 theme: "light2",
-                title: { text: "İllər üzrə məhsuldarlıq artımı (ton/ha)" },
-                axisX: { title: "İllər" },
-                axisY: { title: "Məhsuldarlıq (ton/ha)" },
+                title: { text: "Torpaq Deqredasiya Risk Səviyyələri" },
+                axisY: { title: "Risk Faizi (%)", maximum: 100 },
                 data: [{
                     type: "column",
                     dataPoints: [
-                        { label: "2021", y: 85 },
-                        { label: "2022", y: 92 },
-                        { label: "2023", y: 108 },
-                        { label: "2024", y: 115 },
-                        { label: "2025", y: 122 }
+                        { label: "Eroziya", y: Math.floor(Math.random() * 60) + 20 },
+                        { label: "Şoranlaşma", y: Math.floor(Math.random() * 50) + 10 },
+                        { label: "Humus itkisi", y: Math.floor(Math.random() * 70) + 15 },
+                        { label: "Turşulaşma", y: Math.floor(Math.random() * 40) + 10 },
+                        { label: "Ümumi Risk", y: Math.floor(Math.random() * 80) + 20 }
                     ]
                 }]
             }).render();
