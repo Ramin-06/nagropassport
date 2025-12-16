@@ -189,9 +189,9 @@
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Nakhchivan_Autonomous_Republic_of_Azerbaijan.svg/1200px-Nakhchivan_Autonomous_Republic_of_Azerbaijan.svg.png" alt="Naxçıvan xəritəsi">
                     <svg id="interactive-map" viewBox="0 0 1200 919" xmlns="http://www.w3.org/2000/svg">
                         <path id="sadarak" d="M70,480 L140,480 L140,540 L70,540 Z" onclick="showDistrict('Sədərək')"/>
-                        <path id="sharur" d="M180,650 L300,650 L300,780 L180,780 Z" onclick="showDistrict('Şərur')"/>
-                        <path id="kangarli" d="M140,620 L220,620 L220,700 L140,700 Z" onclick="showDistrict('Kəngərli')"/>
-                        <path id="babek" d="M220,520 L300,520 L300,600 L220,600 Z" onclick="showDistrict('Babək')"/>
+                        <path id="sharur" d="M180,650 L300,650 L300,780 L180,780 Z" onclick="showDistrict('Ordubad')"/>
+                        <path id="kangarli" d="M140,620 L220,620 L220,700 L140,700 Z" onclick="showDistrict('Culfa')"/>
+                        <path id="babek" d="M220,520 L300,520 L300,600 L220,600 Z" onclick="showDistrict('Şahbuz')"/>
                         <path id="nakhchivan-city" d="M250,570 L320,570 L320,640 L250,640 Z" onclick="showDistrict('Naxçıvan şəhəri')"/>
                         <path id="shahbuz" d="M180,480 L260,480 L260,570 L180,570 Z" onclick="showDistrict('Şahbuz')"/>
                         <path id="julfa" d="M320,490 L400,490 L400,570 L320,570 Z" onclick="showDistrict('Culfa')"/>
@@ -225,35 +225,37 @@
 
         const districtsData = {
             'Culfa': [
-                { name: "Bənəniyar", residents: ["Əliyev Vəli", "Həsənov Rəşid", "Məmmədov İlqar", "Quliyev Natiq"] },
-                { name: "Saltaq", residents: ["İsmayılov Kamran", "Cəfərov Elçin", "Babayev Tofiq", "Əhmədov Sahib"] },
-                { name: "Göydərə", residents: ["Sadıqov Fərid", "Nəsirov Orxan", "Qasımov Emin", "Rəhimov Tural"] },
-                { name: "Əlincə", residents: ["Məcidov Ramil", "Əsgərov Elvin", "Hüseynov Nicat", "İbrahimov Samir"] },
-                { name: "Yaycı", residents: ["Novruzov Anar", "Ələkbərov Fuad", "Səfərov Rövşən", "Mirqasımov Elşad"] },
-                { name: "Ərəzin", residents: ["Paşayev Kamaleddin", "Əzizov Taleh", "Məhərrəmov Vüqar", "Qurbanov Seymur"] }
+                { name: "Givraq", residents: ["Paşayev Kamaleddin", "Əzizov Taleh", "Məhərrəmov Vüqar", "Qurbanov Seymur"] }
             ],
-            'Şərur': [
+            'Ordubad': [
                 { name: "Qıvraq", residents: ["Əhmədov Elşən", "Məmmədov Tofiq", "Hüseynov Ramil", "İsgəndərov Kamran"] },
                 { name: "Şərur şəhər", residents: ["Quliyev Natiq", "Əliyev Sahib", "Cəfərov Orxan", "Sadıqov Fərid"] },
                 { name: "Arbatan", residents: ["Novruzov Anar", "Paşayev Vüqar", "Əzizov Taleh", "Babayev İlqar"] }
             ],
-            'Babək': [
-                { name: "Babək", residents: ["Əsgərov Elvin", "Həsənov Rəşid", "Məmmədov İlqar", "Quliyev Natiq"] },
-                { name: "Naxçıvanqala", residents: ["İsmayılov Kamran", "Cəfərov Elçin", "Babayev Tofiq", "Əhmədov Sahib"] }
+            'Şahbuz': [
+                { name: "Şahbuz şəhər", residents: ["Əliyev Vəli", "Həsənov Rəşid", "Məmmədov İlqar", "Quliyev Natiq"] },
+                { name: "Bişkənd", residents: ["İsmayılov Kamran", "Cəfərov Elçin", "Babayev Tofiq", "Əhmədov Sahib"] }
+               
             ],
             'Ordubad': [
                 { name: "Ordubad şəhər", residents: ["Məcidov Ramil", "Əsgərov Elvin", "Hüseynov Nicat", "İbrahimov Samir"] },
                 { name: "Nüsnüs", residents: ["Novruzov Anar", "Ələkbərov Fuad", "Səfərov Rövşən", "Mirqasımov Elşad"] }
             ],
             'Şahbuz': [
-                { name: "Şahbuz şəhər", residents: ["Əliyev Vəli", "Həsənov Rəşid", "Məmmədov İlqar", "Quliyev Natiq"] },
-                { name: "Bişkənd", residents: ["İsmayılov Kamran", "Cəfərov Elçin", "Babayev Tofiq", "Əhmədov Sahib"] }
+                 { name: "Babək", residents: ["Əsgərov Elvin", "Həsənov Rəşid", "Məmmədov İlqar", "Quliyev Natiq"] },
+                { name: "Naxçıvanqala", residents: ["İsmayılov Kamran", "Cəfərov Elçin", "Babayev Tofiq", "Əhmədov Sahib"] }
             ],
             'Sədərək': [
                 { name: "Sədərək", residents: ["Məcidov Ramil", "Əsgərov Elvin", "Hüseynov Nicat", "İbrahimov Samir"] }
             ],
-            'Kəngərli': [
-                { name: "Givraq", residents: ["Paşayev Kamaleddin", "Əzizov Taleh", "Məhərrəmov Vüqar", "Qurbanov Seymur"] }
+            'Culfa': [
+                { name: "Bənəniyar", residents: ["Əliyev Vəli", "Həsənov Rəşid", "Məmmədov İlqar", "Quliyev Natiq"] },
+                { name: "Saltaq", residents: ["İsmayılov Kamran", "Cəfərov Elçin", "Babayev Tofiq", "Əhmədov Sahib"] },
+                { name: "Göydərə", residents: ["Sadıqov Fərid", "Nəsirov Orxan", "Qasımov Emin", "Rəhimov Tural"] },
+                { name: "Əlincə", residents: ["Məcidov Ramil", "Əsgərov Elvin", "Hüseynov Nicat", "İbrahimov Samir"] },
+                { name: "Yaycı", residents: ["Novruzov Anar", "Ələkbərov Fuad", "Səfərov Rövşən", "Mirqasımov Elşad"] },
+                { name: "Ərəzin", residents: ["Paşayev Kamaleddin", "Əzizov Taleh", "Məhərrəmov Vüqar", "Qurbanov Seymur"] }
+               
             ],
             'Naxçıvan şəhəri': [
                 { name: "Naxçıvan şəhər", residents: ["Quliyev Natiq", "Əliyev Sahib", "Cəfərov Orxan", "Sadıqov Fərid"] }
